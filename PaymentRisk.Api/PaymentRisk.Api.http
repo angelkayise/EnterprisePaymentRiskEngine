@@ -1,0 +1,28 @@
+@PaymentRisk_HostAddress = https://localhost:7124
+
+### 1. Check API & MySQL Health
+GET {{PaymentRisk_HostAddress}}/health
+
+###
+
+### 2. Normal Approved Transfer (R5,000 -> Score 0, APPROVED)
+POST {{PaymentRisk_HostAddress}}/api/transfers
+Content-Type: application/json
+
+{
+  "fromAccountNumber": "ACC-1001",
+  "toAccountNumber": "ACC-1002",
+  "amount": 5000.00
+}
+
+###
+
+### 3. High-Value Risk Transfer (R60,000 -> Score 60, FLAGGED_REVIEW)
+POST {{PaymentRisk_HostAddress}}/api/transfers
+Content-Type: application/json
+
+{
+  "fromAccountNumber": "ACC-1001",
+  "toAccountNumber": "ACC-1002",
+  "amount": 60000.00
+}
